@@ -45,13 +45,14 @@ public class ServicioController {
         this.genareserRepo = genareserRepo;
     }
 
+    // Listar servicios
     @GetMapping("/lista")
     public ResponseEntity<List<Servicio>> getAllServicios() {
         List<Servicio> servicios = servicioService.list();
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
 
-
+    // Ver/Leer un servicio
     @GetMapping("/detail/{id}")
     public ResponseEntity<Servicio> getById(@PathVariable("id") Long id) {
         if (!servicioService.existsById(id))
@@ -59,14 +60,6 @@ public class ServicioController {
         Servicio servicio = servicioService.getOne(id).get();
         return new ResponseEntity<>(servicio, HttpStatus.OK);
     }
-
-  /*  @GetMapping("/listafecha/{fecha}")
-    public ResponseEntity<List<Servicio>> getByFecha(@PathVariable("fecha") LocalDate fecha) {
-        if(!servicioService.existsByFecha(fecha))
-            return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        List<Servicio> servicios = servicioService.getByFecha(fecha).get();
-        return new ResponseEntity<>(servicios, HttpStatus.OK);
-    }*/
 
     @GetMapping("/listafecha")
     public ResponseEntity<List<Servicio>> getByFecha(@RequestBody ServicioDto servicioDto) {
@@ -78,6 +71,7 @@ public class ServicioController {
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
 
+    // Crear un servicio
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
@@ -112,6 +106,7 @@ public class ServicioController {
         }
     }
 
+    // Editar servicio
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ServicioDto servicioDto) {
@@ -149,7 +144,7 @@ public class ServicioController {
         return new ResponseEntity(new Mensaje("Servicio cancelado"), HttpStatus.OK);
     }
 
-
+    // Eliminar servicio
     @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Servicio> delete(@PathVariable Long id){

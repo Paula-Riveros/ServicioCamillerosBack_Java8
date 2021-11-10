@@ -24,6 +24,7 @@ public class CamilleroController {
         this.camilleroService = camilleroService;
     }
 
+    // Listar camilleros
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @GetMapping("/lista")
     public ResponseEntity<List<Camillero>> lista() {
@@ -31,6 +32,7 @@ public class CamilleroController {
         return new ResponseEntity<>(camilleros, HttpStatus.OK);
     }
 
+    // Ver camillero
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Camillero> getById(@PathVariable("id") int idCamillero) {
@@ -40,6 +42,7 @@ public class CamilleroController {
         return new ResponseEntity<>(camillero, HttpStatus.OK);
     }
 
+    // Crear camillero
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody CamilleroDto camilleroDto, BindingResult bindingResult) {
@@ -53,6 +56,7 @@ public class CamilleroController {
         return new ResponseEntity<>(new Mensaje("Camillero guardado"), HttpStatus.OK);
     }
 
+    // Editar camillero
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamilleroDto camilleroDto) {
@@ -69,6 +73,7 @@ public class CamilleroController {
         return new ResponseEntity<>(new Mensaje("Camillero actualizado"), HttpStatus.OK);
     }
 
+    // Eliminar camillero
     @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Camillero> delete(@PathVariable("id") int id) {

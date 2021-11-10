@@ -13,18 +13,23 @@ public class Genpacien {
     @Column(name = "OID")
     private int oid;
 
+    // numero de documento
     @Column(name = "PACNUMDOC")
     private String pacnumdoc;
 
+    // primer nombre
     @Column(name = "PACPRINOM")
     private String pacprinom;
 
+    // segundo nombre
     @Column(name = "PACSEGNOM")
     private String pacsegnom;
 
+    // primer apellido
     @Column(name = "PACPRIAPE")
     private String pacpriape;
 
+    // segundo apellido
     @Column(name = "PACSEGAPE")
     private String pacsegape;
 

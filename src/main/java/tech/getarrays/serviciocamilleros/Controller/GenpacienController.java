@@ -18,12 +18,14 @@ public class GenpacienController {
     @Autowired
     GenpacienService genpacienService;
 
+    // Listar pacientes
     @GetMapping("/lista")
     public ResponseEntity<List<Genpacien>> lista() {
         List<Genpacien> list = genpacienService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // Ver paciente por id
     @GetMapping("/detail/{id}")
     public ResponseEntity<Genpacien> getById(@PathVariable("id") int id) {
         if(!genpacienService.existsById(id))
@@ -32,6 +34,7 @@ public class GenpacienController {
         return new ResponseEntity<>(genpacien, HttpStatus.OK);
     }
 
+    // Ver paciente por numero de documento
     @GetMapping("/detail/pacnumdoc/{pacnumdoc}")
     public ResponseEntity<Genpacien> getByPacnumdoc(@PathVariable("pacnumdoc") String pacnumdoc) {
         if(!genpacienService.existsByPacnumdoc(pacnumdoc))

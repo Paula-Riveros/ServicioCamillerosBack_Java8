@@ -46,6 +46,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
+    // Crear nuevo usuario
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -72,6 +73,7 @@ public class AuthController {
         return new ResponseEntity(new Mensaje("Usuario guardado"), HttpStatus.CREATED);
     }
 
+    // Iniciar Sesion
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -85,6 +87,7 @@ public class AuthController {
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
+    // Refrescar token
     @PostMapping("/refresh")
     public ResponseEntity<JwtDto> refresh(@RequestBody JwtDto jwtDto) throws ParseException {
         String token = jwtProvider.refreshToken(jwtDto);
