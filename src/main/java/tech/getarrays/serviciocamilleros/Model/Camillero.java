@@ -8,14 +8,16 @@ public class Camillero {
     @Id
     private Integer idCamillero;
     private String nombreCamillero;
+    private String emailCamillero;
     private Boolean estadoCamillero;
 
     public Camillero() {
     }
 
-    public Camillero(int idCamillero, String nombreCamillero, Boolean estadoCamillero) {
+    public Camillero(int idCamillero, String nombreCamillero, String emailCamillero, Boolean estadoCamillero) {
         this.idCamillero = idCamillero;
         this.nombreCamillero = nombreCamillero;
+        this.emailCamillero = emailCamillero;
         this.estadoCamillero = estadoCamillero;
     }
 
@@ -33,6 +35,14 @@ public class Camillero {
 
     public void setNombreCamillero(String nombreCamillero) {
         this.nombreCamillero = nombreCamillero;
+    }
+
+    public String getEmailCamillero() {
+        return emailCamillero;
+    }
+
+    public void setEmailCamillero(String emailCamillero) {
+        this.emailCamillero = emailCamillero;
     }
 
     public boolean isEstadoCamillero() {

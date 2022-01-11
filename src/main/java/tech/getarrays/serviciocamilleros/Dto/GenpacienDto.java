@@ -1,3 +1,4 @@
+
 package tech.getarrays.serviciocamilleros.Dto;
 
 import java.io.Serializable;

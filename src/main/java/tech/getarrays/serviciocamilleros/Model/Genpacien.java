@@ -1,3 +1,4 @@
+
 package tech.getarrays.serviciocamilleros.Model;
 
 import javax.persistence.Column;

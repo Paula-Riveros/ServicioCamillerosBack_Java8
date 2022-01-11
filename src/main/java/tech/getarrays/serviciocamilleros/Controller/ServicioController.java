@@ -33,11 +33,12 @@ public class ServicioController {
     private final GenpacienService genpacienService;
     private CamilleroRepo camilleroRepo;
     private GenpacienRepo genpacienRepo;
-    private GenareserRepo genareserRepo;
+   private GenareserRepo genareserRepo;
 
     //
     public ServicioController(ServicioService servicioService, CamilleroRepo camilleroRepo,
-                              GenpacienService genpacienService, GenpacienRepo genpacienRepo, GenareserRepo genareserRepo) {
+                              GenpacienService genpacienService, GenpacienRepo genpacienRepo, GenareserRepo genareserRepo
+                              ) {
         this.servicioService = servicioService;
         this.genpacienService = genpacienService;
         this.camilleroRepo = camilleroRepo;
@@ -93,6 +94,7 @@ public class ServicioController {
 
         //boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
 
+        //
         if(genpacien.isPresent()) {
             Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getSolicitante(), genareser2.get(),
                     servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),

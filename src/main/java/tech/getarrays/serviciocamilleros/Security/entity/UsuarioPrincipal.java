@@ -9,39 +9,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UsuarioPrincipal implements UserDetails {
-    private String nombre;
-    private String nombreusuario;
-    private String email;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Usuario usuario;
 
-    public UsuarioPrincipal(String nombre, String nombreusuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    //private String nombre;
+    //private String nombreusuario;
+    //private String email;
+    //private String password;
+    //private Collection<? extends GrantedAuthority> authorities;
+
+    /*public UsuarioPrincipal(String nombre, String nombreusuario, String password, Collection<? extends GrantedAuthority> authorities) {
         this.nombre = nombre;
         this.nombreusuario = nombreusuario;
-        this.email = email;
         this.password = password;
         this.authorities = authorities;
-    }
+    }*/
 
-    public static UsuarioPrincipal build(Usuario usuario) {
+    /*public static UsuarioPrincipal build(Usuario usuario) {
         List<GrantedAuthority> authorities =
                 usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
-        return new UsuarioPrincipal(usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
-    }
+        return new UsuarioPrincipal(usuario.getNombre(), usuario.getNombreUsuario(), usuario.getPassword(), authorities);
+    }*/
 
+    // authorities
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return this.usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
     }
 
+    // password
     @Override
     public String getPassword() {
-        return password;
+        return this.usuario.getPassword();
     }
 
+    // nombreusuario
     @Override
     public String getUsername() {
-        return nombreusuario;
+        return this.usuario.getNombreUsuario();
     }
 
     @Override
@@ -64,11 +71,12 @@ public class UsuarioPrincipal implements UserDetails {
         return true;
     }
 
+    // nombre
     public String getNombre() {
-        return nombre;
+        return this.usuario.getNombre();
     }
 
-    public String getEmail() {
+    /*public String getEmail() {
         return email;
-    }
+    }*/
 }

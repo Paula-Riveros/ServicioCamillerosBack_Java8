@@ -1,15 +1,27 @@
 package tech.getarrays.serviciocamilleros.Security.dto;
 
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+
 public class JwtDto {
 
     private String token;
+    private String bearer = "Bearer";
+    private String nombreUsuario;
+    private Collection<? extends GrantedAuthority> authorities;
+    //private int cambioClave;
 
 
     public JwtDto() {
     }
 
-    public JwtDto(String token) {
+    // , int cambioClave
+    public JwtDto(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
+        this.nombreUsuario = nombreUsuario;
+        this.authorities = authorities;
+        //this.cambioClave = cambioClave;
     }
 
     public String getToken() {
@@ -19,4 +31,36 @@ public class JwtDto {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public String getBearer() {
+        return bearer;
+    }
+
+    public void setBearer(String bearer) {
+        this.bearer = bearer;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+   /* public int getCambioClave() {
+        return cambioClave;
+    }
+
+    public void setCambioClave(int cambioClave) {
+        this.cambioClave = cambioClave;
+    }*/
 }

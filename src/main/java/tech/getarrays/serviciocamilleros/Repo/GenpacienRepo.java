@@ -1,3 +1,4 @@
+
 package tech.getarrays.serviciocamilleros.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,3 +12,4 @@ public interface GenpacienRepo extends JpaRepository<Genpacien, Integer> {
     Optional<Genpacien> findByPacnumdoc(String pacnumdoc);
     boolean existsByPacnumdoc(String pacnumdoc);
 }
+

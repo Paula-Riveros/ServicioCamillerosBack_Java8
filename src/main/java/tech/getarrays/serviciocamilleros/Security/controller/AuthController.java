@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,14 @@ import tech.getarrays.serviciocamilleros.Security.service.RolService;
 import tech.getarrays.serviciocamilleros.Security.service.UsuarioService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -52,7 +54,7 @@ public class AuthController {
         if (bindingResult.hasErrors())
             return new ResponseEntity(new Mensaje("Campos mal puestos o email invalido"), HttpStatus.BAD_REQUEST);
         if (usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
-            return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("Ese usuario ya existe"), HttpStatus.BAD_REQUEST);
         if (usuarioService.existsByEmail(nuevoUsuario.getEmail()))
             return new ResponseEntity(new Mensaje("Ese email ya existe"), HttpStatus.BAD_REQUEST);
 
@@ -77,13 +79,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("Usuario o contraseña incorrecta"), HttpStatus.BAD_REQUEST);
         }
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
-        JwtDto jwtDto = new JwtDto(jwt);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //int cambioClave = usuarioService.findUsuariosByUsername(userDetails.getUsername()).getCambioClave();
+        // , cambioClave
+        JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity(jwtDto, HttpStatus.OK);
     }
 
@@ -91,8 +96,41 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<JwtDto> refresh(@RequestBody JwtDto jwtDto) throws ParseException {
         String token = jwtProvider.refreshToken(jwtDto);
-        JwtDto jwt = new JwtDto(token);
+        // , jwtDto.getCambioClave()
+        JwtDto jwt = new JwtDto(token, jwtDto.getNombreUsuario(), jwtDto.getAuthorities());
         return new ResponseEntity(jwt, HttpStatus.OK);
     }
+
+    @GetMapping("/find/username={username}")
+    public ResponseEntity<Usuario> findUsuariosByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.ok().body(usuarioService.findUsuariosByUsername(username));
+    }
+
+    /*@PutMapping("/usuario/cambiar-clave/old={oldPassword}/new={newPassword}")
+    public ResponseEntity<Mensaje> cambiarClave(@PathVariable("oldPassword") String oldPassword, @PathVariable("newPassword") String newPassword, Principal user) {
+        String nombreUsuario = user.getName();
+        System.out.println(nombreUsuario);
+        Mensaje mensaje;
+        Usuario currentUser = usuarioService.findUsuariosByUsername(nombreUsuario);
+        if(passwordEncoder.matches(oldPassword, currentUser.getPassword())){
+            currentUser.setPassword(passwordEncoder.encode(newPassword));
+            currentUser.setCambioClave(1);
+            usuarioService.save(currentUser);
+            mensaje = new Mensaje("Cambio de contraseña exitoso");
+        }
+        else{
+            mensaje = new Mensaje("Contraseña actual incorrecta");
+        }
+        return new ResponseEntity<>(mensaje,HttpStatus.OK);
+    }
+
+    @PutMapping("/reset-clave/username={username}/reset={newPassword}")
+    public ResponseEntity<Mensaje> resetClave(@PathVariable("newPassword") String newPassword, @PathVariable("username") String username){
+        Usuario currentUser = usuarioService.findUsuariosByUsername(username);
+        currentUser.setPassword(passwordEncoder.encode(newPassword));
+        currentUser.setCambioClave(0);
+        usuarioService.save(currentUser);
+        return new ResponseEntity<>(new Mensaje("Clave Reseteada"),HttpStatus.OK);
+    }*/
 
 }

@@ -70,19 +70,6 @@
 			<version>2.0.1.Final</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/io.github.jhipster/jhipster-framework -->
-		<dependency>
-			<groupId>io.github.jhipster</groupId>
-			<artifactId>jhipster-framework</artifactId>
-			<version>3.9.1</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
 		<dependency>
 			<groupId>com.nimbusds</groupId>

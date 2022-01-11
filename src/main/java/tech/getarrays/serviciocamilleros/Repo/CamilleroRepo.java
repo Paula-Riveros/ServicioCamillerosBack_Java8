@@ -6,4 +6,5 @@ import tech.getarrays.serviciocamilleros.Model.Camillero;
 
 @Repository
 public interface CamilleroRepo extends JpaRepository<Camillero, Integer> {
+    boolean existsByEmailCamillero(String email);
 }

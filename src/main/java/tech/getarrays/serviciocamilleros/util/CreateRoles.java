@@ -1,4 +1,4 @@
-/**package tech.getarrays.serviciocamilleros.util;
+/*package tech.getarrays.serviciocamilleros.util;
 
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.boot.CommandLineRunner;

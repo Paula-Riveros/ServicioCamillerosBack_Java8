@@ -50,8 +50,10 @@ public class CamilleroController {
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
         if (camilleroService.existsById(camilleroDto.getIdCamillero()))
             return new ResponseEntity(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);
+        if (camilleroService.existsByEmail(camilleroDto.getEmailCamillero()))
+            return new ResponseEntity(new Mensaje("Ese email ya existe"), HttpStatus.BAD_REQUEST);
 
-        Camillero camillero = new Camillero(camilleroDto.getIdCamillero(), camilleroDto.getNombreCamillero(), camilleroDto.isEstadoCamillero());
+        Camillero camillero = new Camillero(camilleroDto.getIdCamillero(), camilleroDto.getNombreCamillero(), camilleroDto.getEmailCamillero(), camilleroDto.isEstadoCamillero());
         camilleroService.save(camillero);
         return new ResponseEntity<>(new Mensaje("Camillero guardado"), HttpStatus.OK);
     }

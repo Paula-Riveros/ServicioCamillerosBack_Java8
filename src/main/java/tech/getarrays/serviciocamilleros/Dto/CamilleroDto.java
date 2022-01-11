@@ -1,5 +1,6 @@
 package tech.getarrays.serviciocamilleros.Dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,14 +15,19 @@ public class CamilleroDto implements Serializable {
     @NotBlank
     private String nombreCamillero;
 
+    @NotBlank
+    @Email
+    private String emailCamillero;
+
     private boolean estadoCamillero;
 
     public CamilleroDto() {
     }
 
-    public CamilleroDto(int idCamillero, String nombreCamillero, boolean estadoCamillero) {
+    public CamilleroDto(int idCamillero, String nombreCamillero, String emailCamillero, boolean estadoCamillero) {
         this.idCamillero = idCamillero;
         this.nombreCamillero = nombreCamillero;
+        this.emailCamillero = emailCamillero;
         this.estadoCamillero = estadoCamillero;
     }
 
@@ -39,6 +45,14 @@ public class CamilleroDto implements Serializable {
 
     public void setNombreCamillero(String nombreCamillero) {
         this.nombreCamillero = nombreCamillero;
+    }
+
+    public String getEmailCamillero() {
+        return emailCamillero;
+    }
+
+    public void setEmailCamillero(String emailCamillero) {
+        this.emailCamillero = emailCamillero;
     }
 
     public boolean isEstadoCamillero() {

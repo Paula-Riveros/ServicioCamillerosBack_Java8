@@ -7,3 +7,4 @@ import tech.getarrays.serviciocamilleros.Model.Genareser;
 @Repository
 public interface GenareserRepo extends JpaRepository<Genareser, Integer> {
 }
+

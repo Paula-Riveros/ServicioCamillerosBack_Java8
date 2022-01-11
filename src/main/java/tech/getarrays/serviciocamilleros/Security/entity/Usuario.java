@@ -20,6 +20,9 @@ public class Usuario {
     private String email;
     @NotNull
     private String password;
+
+    //private int cambioClave;
+
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
@@ -33,6 +36,7 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
+        //this.cambioClave = 0;
     }
 
     public int getId() {
@@ -74,6 +78,14 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+ /*   public int getCambioClave() {
+        return cambioClave;
+    }
+
+    public void setCambioClave(int cambioClave) {
+        this.cambioClave = cambioClave;
+    }*/
 
     public Set<Rol> getRoles() {
         return roles;

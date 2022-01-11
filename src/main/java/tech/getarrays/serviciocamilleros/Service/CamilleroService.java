@@ -36,6 +36,10 @@ public class CamilleroService {
         return camilleroRepo.existsById(idCamillero);
     }
 
+    public boolean existsByEmail(String email) {
+        return camilleroRepo.existsByEmailCamillero(email);
+    }
+
     public boolean delete(int idCamillero) {
         if (getOne(idCamillero).isPresent()) {
             camilleroRepo.deleteById(idCamillero);
